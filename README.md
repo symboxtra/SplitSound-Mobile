@@ -1,7 +1,7 @@
 # SplitSound-Mobile
 We're  in the endgame now...
 
-### Instructions-*read before yelling at me*
+## Instructions-*read before yelling at me*
 The first step is to either have Xcode installed or Android Studio, depending which one you want to work on.
 
 Then, install the react-native cli by running
