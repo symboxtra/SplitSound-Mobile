@@ -26,6 +26,8 @@ image="system-images;android-27;google_apis;x86"
 headless=false
 useEmulator=true
 
+echo -e "${YELLOW}=== Android Emulator Startup ===${NC}"
+
 # Parse args
 while getopts ":a:sh" opt; do
     case $opt in
@@ -44,7 +46,7 @@ while getopts ":a:sh" opt; do
             echo
             ;;
         h)
-            echo "Usage: test.sh [-a avd device name] [-s] [-h] [-p]"
+            echo "Usage: test.sh [-a avd-device-name] [-s] [-h] [-p]"
             echo "    -s    Run emulator headless."
             echo "    -p    Use an attached phone. Don't start the emulator."
             echo

@@ -45,7 +45,7 @@ for ($i = 0; $i -lt $args.count; $i++)
 	if ($args[$i] -eq "-h")
 	{
 		""
-		Write-Host "Usage: test.ps1 [-a avd device name] [-s] [-h]"
+		Write-Host "Usage: test.ps1 [-a avd-device-name] [-s] [-h]"
 		Write-Host "$Tab $Tab $Tab -s Run emulator headless."
         Write-Host "$Tab $Tab $Tab -p Use an attached phone. Don't start the emulator."
 		""
