@@ -14,7 +14,7 @@ if (-not $ENV:ANDROID_HOME)
     $ENV:ANDROID_HOME="$ENV:LOCALAPPDATA\Android\Sdk"
 
     ""
-    Write-Host "Environment variable ANDROID_HOME was not defined. Using default path: ${ENV:ANDROID_HOME}" -Foreground Blue
+    Write-Host "Environment variable ANDROID_HOME was not defined. Using default path: ${ENV:ANDROID_HOME}" -Foreground Cyan
     Write-Host "To change, run the following commands or add the ANDROID_HOME environment variable in Windows."
     Write-Host "    [Environment]::SetEnvironmentVariable('ANDROID_HOME', 'C:\Path\to\Sdk', 'User')"
     Write-Host '    $ENV:ANDROID_HOME=C:\Path\to\Sdk'
@@ -40,7 +40,7 @@ ForEach ($p in $ANDROID_PATHS)
         Write-Host "${RED}=== Error ===${NC}" -Foreground Red
         Write-Host "Required path: ${ENV:ANDROID_HOME}\${p} did not exist."
         ""
-        exit 1 # If run as script
+        exit 1
     }
 
     # Add to path

@@ -6,6 +6,15 @@
 #                                                       #
 #########################################################
 
+# Setup environment variables
+RUN_DIR=$(dirname ${0})
+source "${RUN_DIR}/android-env.sh"
+
+SUCCESS=$?
+if [ ${SUCCESS} -ne 0 ]; then
+    exit ${SUCCESS}
+fi
+
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
 BLUE='\033[1;96m'

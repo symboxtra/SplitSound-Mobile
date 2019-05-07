@@ -4,35 +4,45 @@
 #                                                       #
 #########################################################
 
-""
+$RUN_DIR = Split-Path $MyInvocation.MyCommand.Path
+. "${RUN_DIR}\android-env.ps1"
+
+$SUCCESS = $LastExitCode
+if ($SUCCESS -ne 0)
+{
+    exit $SUCCESS
+}
+
 $avd = "PixelTest"
 $image = "system-images;android-27;google_apis;x86"
 $headless = $false
 $useEmulator = $true
 
+Write-Host "=== Android Emulator Startup ===" -Foreground Yellow
+
 # Check command line arguments
-for($i = 0; $i -lt $args.count; $i++)
+for ($i = 0; $i -lt $args.count; $i++)
 {
-	if($args[$i] -eq "-a")
+	if ($args[$i] -eq "-a")
     {
         # Grab the AVD name
         $avd = $args[$i + 1]
     }
-	if($args[$i] -eq "-s")
+	if ($args[$i] -eq "-s")
 	{
 		""
 		Write-Host "Running in headless mode. Remove -s to run with GUI" -Foreground Cyan
 		""
 		$headless = $true
 	}
-    if($args[$i] -eq "-p")
+    if ($args[$i] -eq "-p")
     {
         ""
 		Write-Host "Attempting to use an attached phone. Remove -p to start an emulator." -Foreground Cyan
 		""
 		$useEmulator = $false
     }
-	if($args[$i] -eq "-h")
+	if ($args[$i] -eq "-h")
 	{
 		""
 		Write-Host "Usage: test.ps1 [-a avd device name] [-s] [-h]"
@@ -43,11 +53,11 @@ for($i = 0; $i -lt $args.count; $i++)
 	}
 }
 
-if($useEmulator)
+if ($useEmulator)
 {
     # Check if device exists in avdmanager, else
     # create a new test AVD
-    if((avdmanager list avd | findstr /e "Name: $avd") -eq $null)
+    if ((avdmanager list avd | findstr /e "Name: $avd") -eq $null)
     {
         Write-Host "Creating test AVD..." -Foreground Yellow
         ""
@@ -55,7 +65,7 @@ if($useEmulator)
         echo no | avdmanager create avd -n $avd -k "$image" > $null
 
         # Check if create failed
-        if ( -not $? )
+        if (-not $?)
         {
             ""
             Write-Host "Failed to create test AVD with package '$image'." -Foreground Red
@@ -75,7 +85,7 @@ if($useEmulator)
     ""
 
     # Start emulator in background
-    if($headless)
+    if ($headless)
     {
         Start-Job -ScriptBlock {emulator -avd $args[0] -no-window -no-audio -no-boot-anim} -ArgumentList $avd > $null
     }
@@ -85,9 +95,9 @@ if($useEmulator)
     }
 
     # Wait for emulator before proceeding
-    Write-Host "Waiting for emulator to boot..." -ForegroundColor Yellow
+    Write-Host "Waiting for emulator to boot..." -Foreground Yellow
     adb wait-for-device
-    while((adb shell getprop sys.boot_completed) -ne "1")
+    while ((adb shell getprop sys.boot_completed) -ne "1")
     {
         sleep 2
     }
